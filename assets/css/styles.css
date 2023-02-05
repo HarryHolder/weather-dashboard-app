@@ -1,0 +1,31 @@
+#header {
+    background-image: url(../images/rays-clouds.webp);
+    background-position: center;
+}
+
+#title {
+    color: rgb(54, 54, 196);
+}
+
+#form-heading {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#show-weather {
+    border: 1px solid red;
+}
+
+.row {
+    border: 1px solid red;
+
+}
+
+.btn {
+    background-color: rgb(54, 54, 196);
+    color: white;
+}
+
+hr {
+    background-color: black;
+}
