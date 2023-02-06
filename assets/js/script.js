@@ -79,8 +79,9 @@ function fetchAPI(search) {
       method: "get",
     }).then(function (response) {
       let currentCityAndDate = $("<h2>");
+      let date = moment().format("L");
       // create a new H2 element
-      currentCityAndDate.text(search + " " + "(" + moment().format("L") + ")");
+      currentCityAndDate.text(search + " - " + date);
       // fill H2 with searched city and todays date
       let weatherIcon = $("<img>");
       // create image element
@@ -104,60 +105,55 @@ function fetchAPI(search) {
       let humidity = $("<h4>");
       humidity.text("Humidity: " + response.list[0].main.humidity + "%");
       todayEl.append(humidity);
-   
-        console.log(response);
 
-      // create area to display forcast  
-      let cardDisplayEl = $("#forecase");
-      let card1 = $("<div>");
-      card1.attr("class", "")
-        
-      // get dates for forecast
-      let day1 = "(" + moment().add(1, 'days').calendar + ")"
+      console.log(response);
 
+      // create area to display forcast
+      let cardDisplayEl = $("#forecast");
 
+      cardDisplayEl.empty();
 
-      // get future weather data for temp
-      let futureTemp1 = response.list[1].main.temp;
-      let futureTemp2 = response.list[2].main.temp;
-      let futureTemp3 = response.list[3].main.temp;
-      let futureTemp4 = response.list[4].main.temp;
-      let futureTemp5 = response.list[5].main.temp;
-
-      // get future weather data for wind speed
-      let futureWind1 = response.list[1].wind.speed;
-      let futureWind2 = response.list[2].wind.speed;
-      let futureWind3 = response.list[3].wind.speed;
-      let futureWind4 = response.list[4].wind.speed;
-      let futureWind5 = response.list[5].wind.speed;
-
-      // get future weather data for humidity
-      let futureHumidity1 = response.list[1].main.Humidity;
-      let futureHumidity2 = response.list[2].main.Humidity;
-      let futureHumidity3 = response.list[3].main.Humidity;
-      let futureHumidity4 = response.list[4].main.Humidity;
-      let futureHumidity5 = response.list[5].main.Humidity;
-
-      // get future weather data icon
-      let futureIcon1 = response.list[1].main.Icon;
-      let futureIcon2 = response.list[2].main.Icon;
-      let futureIcon3 = response.list[3].main.Icon;
-      let futureIcon4 = response.list[4].main.Icon;
-      let futureIcon5 = response.list[5].main.Icon;
+      for (let i = 5; i < response.list.length; i += 8) {
+        let card = $("<div>");
+        card.attr("class", "card col");
+        card.attr("id", [i]);
+        let cardBody = $("<div>");
+        cardBody.attr("class", "card-body");
+        let cardTitle = $("<h5>");
+        cardTitle.attr("class", "card-title");
+        let cardTimestamp = response.list[i].dt;
+        let cardDate = new Date(cardTimestamp * 1000);
+        let icon = $("<img>");
+        icon.attr(
+          "src",
+          `https://openweathermap.org/img/w/${response.list[i].weather[0].icon}.png`
+        );
+        cardTitle.text(cardDate.toLocaleDateString("en-GB"));
+        let cardTemp = $("<p>");
+        cardTemp.text("Temp: " + response.list[i].main.temp + "°C");
+        let cardWind = $("<p>");
+        cardWind.text("Wind Speed: " + response.list[i].wind.speed + " mph");
+        let cardHumidity = $("<p>");
+        cardHumidity.text("Humidity: " + response.list[i].main.humidity + "%");
+        cardDisplayEl.append(card);
+        card.append(cardBody);
+        cardTitle.append(icon);
+        cardBody.append(cardTitle);
+        cardBody.append(cardTemp);
+        cardBody.append(cardWind);
+        cardBody.append(cardHumidity);
+      }
     });
   }
 }
 
-
-
-
-
-function handleSearch(event) { // function for taking user input
-  if (!$("#search-input").val()) { 
+function handleSearch(event) {
+  // function for taking user input
+  if (!$("#search-input").val()) {
     // If no value is input end function
     return;
   }
-  event.preventDefault(); 
+  event.preventDefault();
   let search = $("#search-input").val().trim(); // Create variable with users search
 
   fetchAPI(search); // Run fetchAPI function with the search as the parameter
@@ -166,15 +162,15 @@ function handleSearch(event) { // function for taking user input
 
 $("#search-button").on("click", handleSearch); // When search button is clicked run the above function
 
-function historyClick(event) { // function for displaying data for previously searched places
-  if (!event.target.matches(".history-btn")) { 
+function historyClick(event) {
+  // function for displaying data for previously searched places
+  if (!event.target.matches(".history-btn")) {
     // If target of click is not a button with class history-btn end function
     return;
   }
-  let btn = event.target; 
+  let btn = event.target;
   let search = btn.getAttribute("data-search"); // Get the data-search value from button
   fetchAPI(search); // Run fetchAPI with the place name taken from data-search
 }
 
 searchHistoryContainer.on("click", historyClick); // if a previous place button is clicked, run above function
-
