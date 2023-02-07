@@ -12,21 +12,35 @@
     padding-bottom: 10px;
 }
 
-#show-weather {
-    border: 1px solid red;
-}
-
-.row {
-    border: 1px solid red;
-
-}
-
 .btn {
-    background-color: rgb(54, 54, 196);
+    background-color: rgb(19, 19, 116);
     color: white;
+    margin-top:5px;
+    border-radius: 3px;
 }
 
-hr {
-    background-color: black;
+.input-group-append {
+    display: block;
+    width: 100%;
 }
+
+#search-input {
+    display: inline;
+    width: 100%;
+    line-height: 2;
+}
+
+#search-button {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+}
+
+#clear-button {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+}
+
+
 

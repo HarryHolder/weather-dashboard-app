@@ -1,6 +1,10 @@
+moment.locale('en-gb');
+
 let todayEl = $("#today"); // Link todayEl to html section
 let searchHistory = []; // empty array for searches
 let searchHistoryContainer = $("#history"); // create element for button display area
+let clearButton = $("#clear-button");
+
 
 function displayHistory() {
   // function for creating buttons for previous searched location
@@ -14,6 +18,7 @@ function displayHistory() {
     btn.text(searchHistory[i]); // give the button a text of the searched location
     searchHistoryContainer.append(btn); // add the button to the container
   }
+
 }
 
 function addToHistory(search) {
@@ -33,6 +38,7 @@ function getHistory() {
   if (storedHistory) {
     // Check stored history exists
     searchHistory = JSON.parse(storedHistory); // Convert from string to object
+    
   }
   displayHistory(); // re-run the display function
 }
@@ -115,7 +121,7 @@ function fetchAPI(search) {
 
       for (let i = 5; i < response.list.length; i += 8) {
         let card = $("<div>");
-        card.attr("class", "card col");
+        card.attr("class", "card col-sm-12 col-lg");
         card.attr("id", [i]);
         let cardBody = $("<div>");
         cardBody.attr("class", "card-body");
@@ -157,7 +163,7 @@ function handleSearch(event) {
   let search = $("#search-input").val().trim(); // Create variable with users search
 
   fetchAPI(search); // Run fetchAPI function with the search as the parameter
-  $("#search-input").text(""); // empty the search input
+  $("#search-input").empty; // empty the search input
 }
 
 $("#search-button").on("click", handleSearch); // When search button is clicked run the above function
@@ -174,3 +180,8 @@ function historyClick(event) {
 }
 
 searchHistoryContainer.on("click", historyClick); // if a previous place button is clicked, run above function
+clearButton.on("click", function(event) {
+  localStorage.clear();
+  displayHistory();
+});
+
