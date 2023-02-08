@@ -53,7 +53,7 @@ function fetchAPI(search) {
   addToHistory(search); // add the searched location to the searched history array
 
   let queryURL = // URL to send to the API including key and searched city
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     search +
     "&limit=5&appid=6090686048651d85250d11bb39ac022a";
 
@@ -73,7 +73,7 @@ function fetchAPI(search) {
   // function to get weather data using latitude and longitude
   function getWeather(lat, lon) {
     let weatherURL =
-      "http://api.openweathermap.org/data/2.5/forecast?lat=" + // create URL for API using lat and lon for users city search
+      "https://api.openweathermap.org/data/2.5/forecast?lat=" + // create URL for API using lat and lon for users city search
       lat +
       "&lon=" +
       lon +
