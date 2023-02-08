@@ -163,7 +163,7 @@ function handleSearch(event) {
   let search = $("#search-input").val().trim(); // Create variable with users search
 
   fetchAPI(search); // Run fetchAPI function with the search as the parameter
-  $("#search-input").empty; // empty the search input
+
 }
 
 $("#search-button").on("click", handleSearch); // When search button is clicked run the above function
